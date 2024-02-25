@@ -31,26 +31,36 @@ class Passage extends StatelessWidget {
         child: Obx(
           () => passageController.isLoading.value
               ? const Center(child: CircularProgressIndicator())
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      passageController.model?.bible?.book?.title ?? "",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    Center(
+                      child: Text(
+                        passageController.model?.bible?.book?.title ?? "",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                     ListView(
                       children: List.generate(
-                        passageController
-                                .model?.bible?.book?.chapter?.verses?.length ??
-                            1,
+                        (passageController.model?.bible?.book?.chapter?.verses
+                                    ?.length ??
+                                0)
+                            .ceil(),
                         (rowIndex) {
-                          return const Row(
+                          return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [Text("asdasd")],
+                            children: [
+                              Text(
+                                passageController.model?.bible?.book?.chapter
+                                        ?.verses?[rowIndex]
+                                        .toString() ??
+                                    "",
+                              ),
+                            ],
                           );
                         },
                       ),
-                    ),
+                    )
                   ],
                 ),
         ),
